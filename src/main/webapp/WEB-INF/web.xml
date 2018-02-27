@@ -35,6 +35,17 @@
         <servlet-name>sign</servlet-name>
         <url-pattern>/sign</url-pattern>
     </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>blogcreate</servlet-name>
+        <servlet-class>guestbook.BlogCreateServlet</servlet-class>
+    </servlet>
+       
+     <servlet-mapping>
+        <servlet-name>blogcreate</servlet-name>
+        <url-pattern>/blogcreate</url-pattern>
+    </servlet-mapping>
       
       
   <welcome-file-list>
