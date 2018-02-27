@@ -28,6 +28,7 @@
         <p>Blog posts</p>
         <%
         for (BlogPost blogPost : blogPosts) {
+        	
             pageContext.setAttribute("blogPost_title",
             							blogPost.getTitle());
             pageContext.setAttribute("blogPost_content",
@@ -49,6 +50,7 @@
                 </div>
                 <%
             }
+            
         }
     }
 %>	

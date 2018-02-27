@@ -56,6 +56,7 @@
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(blogPosts);
+	int counter = 0;
 	
     if (blogPosts.isEmpty()) {
         %>
@@ -66,6 +67,9 @@
         <p>Blog posts for '${fn:escapeXml(blogPostName)}'.</p>
         <%
         for (BlogPost blogPost : blogPosts) {
+        		if(counter == 3){
+        			break;
+        		}
             pageContext.setAttribute("blogPost_title",
             							blogPost.getTitle());
             pageContext.setAttribute("blogPost_content",
@@ -87,6 +91,7 @@
                 </div>
                 <%
             }
+            counter = counter + 1;
         }
     }
 %>
