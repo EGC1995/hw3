@@ -14,6 +14,14 @@ public class GAECronServlet extends HttpServlet {
 					//Put your logic here
 					//BEGIN
 					//END
+				 Message msg = new MimeMessage(session);
+				  msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
+				  msg.addRecipient(Message.RecipientType.TO,
+				                   new InternetAddress("user@example.com", "Mr. User"));
+				  msg.setSubject("Your Example.com account has been activated");
+				  msg.setText("This is a test");
+				  Transport.send(msg);
+
 			}
 			catch (Exception ex) {
 				//Log any exceptions in your Cron Job
