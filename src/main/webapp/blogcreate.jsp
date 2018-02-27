@@ -4,7 +4,8 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title>Exam Results</title>
+		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+		<title>Create Blog Post</title>
 	</head>
 	<body>  
 		<% String blogPostName = request.getParameter("blogPostName"); %>

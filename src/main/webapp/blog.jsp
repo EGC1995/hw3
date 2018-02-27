@@ -84,11 +84,11 @@
                 pageContext.setAttribute("blogPost_user",
                 							blogPost.getUser());
                 %>
-                <div class="blogPost" style="border:2px; border-color:black; border-style: solid;">
-	                <h2>${fn:escapeXml(blogPost_title)}</h2>
-	                <blockquote>${fn:escapeXml(blogPost_content)}</blockquote>
-	                <p><b>${fn:escapeXml(blogPost_user.nickname)}</b> on ${fn:escapeXml(blogPost_date)}</p>
-                </div>
+                <article class="blogPost">
+	                <header><h2>${fn:escapeXml(blogPost_title)}</h2></header>
+	                <section>${fn:escapeXml(blogPost_content)}</section>
+	                <footer><p><b>${fn:escapeXml(blogPost_user.nickname)}</b> on ${fn:escapeXml(blogPost_date)}</p></footer>
+                </article>
                 <%
             }
             counter = counter + 1;

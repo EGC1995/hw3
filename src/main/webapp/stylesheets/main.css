@@ -4,3 +4,9 @@
    font-family: Verdana, Helvetica, sans-serif;
    background-color: #FFFFCC;
 }
+
+.blogPost {
+	border:2px; 
+	border-color:black; 
+	border-style: solid;
+}
