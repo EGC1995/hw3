@@ -3,14 +3,10 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
-<%@ page import="com.google.appengine.api.datastore.Query" %>
-<%@ page import="com.google.appengine.api.datastore.Entity" %>
-<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
-<%@ page import="com.google.appengine.api.datastore.Key" %>
-<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="com.googlecode.objectify.*" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="guestbook.BlogPost" %>
 
 <html>
 	<head>
@@ -20,12 +16,12 @@
 		<img style="width:100%" src="https://i2-prod.mirror.co.uk/incoming/article10353628.ece/ALTERNATES/s810/MAIN-Arnold-Schwarzenegger.jpg">
 	
 		<%
-		    String guestbookName = request.getParameter("guestbookName");
-		    if (guestbookName == null) {
-		        guestbookName = "default";
+		    String blogPostName = request.getParameter("blogPostName");
+		    if (blogPostName == null) {
+		    		blogPostName = "default";
 		    }
 
-	    		pageContext.setAttribute("guestbookName", guestbookName);
+	    		pageContext.setAttribute("blogPostName", blogPostName);
 	    		UserService userService = UserServiceFactory.getUserService();
 	    		User user = userService.getCurrentUser();
 	    		if (user != null) {
@@ -33,7 +29,12 @@
 		%>
 		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
 		<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-		<a href="/blogcreate.jsp">Create Post</a>
+		<!-- a href="/blogcreate.jsp">Create Post</a-->
+		<p>Currently blogPostName is ${fn:escapeXml(blogPostName)}</p>
+		<form action="blogcreate.jsp" method="post">
+		    <input type="submit" value="Create Post" />
+		    <input type="hidden" name="blogPostName" value="${fn:escapeXml(blogPostName)}"/>
+		</form>
 		<%
 			} else {
 		%>
@@ -43,49 +44,45 @@
 		<%
 		    }
 		%>
+		
 <%
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
-    // Run an ancestor query to ensure we see the most up-to-date
-    // view of the Greetings belonging to the selected Guestbook.
-
-    Query query = new Query("Greeting", guestbookKey).addSort("user", Query.SortDirection.DESCENDING).addSort("date", Query.SortDirection.DESCENDING);
-
-    List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-
-    if (greetings.isEmpty()) {
+	ObjectifyService.register(BlogPost.class);
+	List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
+	Collections.sort(blogPosts);
+	
+    if (blogPosts.isEmpty()) {
         %>
-        <p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p>
+        <p>'${fn:escapeXml(blogPostName)}' has no blog posts.</p>
         <%
     } else {
         %>
-        <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
+        <p>Blog posts for '${fn:escapeXml(blogPostName)}'.</p>
         <%
-        for (Entity greeting : greetings) {
-            pageContext.setAttribute("greeting_content",
-                                     greeting.getProperty("content"));
-            if (greeting.getProperty("user") == null) {
-
+        for (BlogPost blogPost : blogPosts) {
+            pageContext.setAttribute("blogPost_title",
+            							blogPost.getTitle());
+            pageContext.setAttribute("blogPost_content",
+									blogPost.getContent());
+            pageContext.setAttribute("blogPost_date",
+									blogPost.getDate());
+            if (blogPost.getUser() == null) {
+	            	%>
+	                <p>An anonymous person wrote something here, which shouldn't be possible.</p>
+	            <%
             } else {
-                pageContext.setAttribute("greeting_user",
-                                         greeting.getProperty("user"));
+                pageContext.setAttribute("blogPost_user",
+                							blogPost.getUser());
                 %>
-                <p><b>${fn:escapeXml(greeting_user.nickname)}</b> wrote:</p>
-                <%           
-                %>
-                <blockquote>${fn:escapeXml(greeting_content)}</blockquote>
+                <div class="blogPost" style="border:2px; border-color:black; border-style: solid;">
+	                <h2>${fn:escapeXml(blogPost_title)}</h2>
+	                <blockquote>${fn:escapeXml(blogPost_content)}</blockquote>
+	                <p><b>${fn:escapeXml(blogPost_user.nickname)}</b> on ${fn:escapeXml(blogPost_date)}</p>
+                </div>
                 <%
             }
         }
     }
 %>
-
-		<form action="/sign" method="post">
-    			<div><textarea name="content" rows="3" cols="60"></textarea></div>
-			<div><input type="submit" value="Post Greeting" /></div>
-			<input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-		</form>
 	</body>
 </html>
 

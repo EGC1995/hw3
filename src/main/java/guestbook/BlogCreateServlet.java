@@ -1,46 +1,29 @@
 package guestbook;
 
-
-import com.google.appengine.api.datastore.DatastoreService;
-
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-
-import com.google.appengine.api.datastore.Entity;
-
-import com.google.appengine.api.datastore.Key;
-
-import com.google.appengine.api.datastore.KeyFactory;
-
 import com.google.appengine.api.users.User;
-
 import com.google.appengine.api.users.UserService;
-
 import com.google.appengine.api.users.UserServiceFactory;
-
- 
-
+import com.googlecode.objectify.ObjectifyService;
 import java.io.IOException;
-
 import java.util.Date;
-
  
-
 import javax.servlet.http.HttpServlet;
-
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
- 
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class BlogCreateServlet extends HttpServlet {
-
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
-
                 throws IOException {
-
-        resp.sendRedirect("/blogcreate.jsp");
-
+        UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+ 
+        String blogPostName = req.getParameter("blogPostName");
+        String title = req.getParameter("title");
+        String content = req.getParameter("content");
+        BlogPost blogPost =  new BlogPost(user, title, content, blogPostName);
+        ofy().save().entity(blogPost).now(); 
+ 
+        resp.sendRedirect("/blog.jsp?blogPostName=" + blogPostName);
     }
-
 }

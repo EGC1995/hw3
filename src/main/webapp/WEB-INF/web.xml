@@ -30,17 +30,6 @@
         <servlet-name>ofysign</servlet-name>
         <url-pattern>/ofysign</url-pattern>
     </servlet-mapping>
-      
-    <servlet>
-        <servlet-name>sign</servlet-name>
-        <servlet-class>guestbook.SignGuestbookServlet</servlet-class>
-    </servlet>
-       
-     <servlet-mapping>
-        <servlet-name>sign</servlet-name>
-        <url-pattern>/sign</url-pattern>
-    </servlet-mapping>
-    
     
     <servlet>
         <servlet-name>blogcreate</servlet-name>
@@ -52,9 +41,15 @@
         <url-pattern>/blogcreate</url-pattern>
     </servlet-mapping>
       
-      
-
-  
+    <servlet>
+        <servlet-name>sign</servlet-name>
+        <servlet-class>guestbook.SignGuestbookServlet</servlet-class>
+    </servlet>
+       
+     <servlet-mapping>
+        <servlet-name>sign</servlet-name>
+        <url-pattern>/sign</url-pattern>
+    </servlet-mapping>
   
   
   <filter>
