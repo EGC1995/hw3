@@ -21,7 +21,7 @@
   
   <servlet>
 <servlet-name>GAECronServlet</servlet-name>
-<servlet-class>com.gaejexperiments.cron.GAEJCronServlet</servlet-class>
+<servlet-class>guestbook.GAECronServlet</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GAECronServlet</servlet-name>
