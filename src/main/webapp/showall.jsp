@@ -1,3 +1,5 @@
+<html>
+	<head>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.appengine.api.users.User" %>
@@ -6,52 +8,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="com.googlecode.objectify.*" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="guestbook.BlogPost" %>
-
-<html>
-	<head>
-  		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-	</head>
-	<body>
-		<img style="width:100%" src="https://i2-prod.mirror.co.uk/incoming/article10353628.ece/ALTERNATES/s810/MAIN-Arnold-Schwarzenegger.jpg">
+<%@ page import="guestbook.BlogPost" %>	
 	
-		<%
-		    String blogPostName = request.getParameter("blogPostName");
-		    if (blogPostName == null) {
-		    		blogPostName = "default";
-		    }
+	</head>
 
-	    		pageContext.setAttribute("blogPostName", blogPostName);
-	    		UserService userService = UserServiceFactory.getUserService();
-	    		User user = userService.getCurrentUser();
-	    		if (user != null) {
-	    			pageContext.setAttribute("user", user);
-		%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-		<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-		<!-- a href="/blogcreate.jsp">Create Post</a-->
-		<p>Currently blogPostName is ${fn:escapeXml(blogPostName)}</p>
-		<form action="blogcreate.jsp" method="post">
-		    <input type="submit" value="Create Post" />
-		    <input type="hidden" name="blogPostName" value="${fn:escapeXml(blogPostName)}"/>
-		</form>
-		
-		<form action="showall.jsp" method="post">
-		    <input type="submit" value="Show all posts" />
-		    <input type="hidden" name="blogPostName" value="${fn:escapeXml(blogPostName)}"/>
-		</form>
-		
-		
-		<%
-			} else {
-		%>
-		<p>Hello!
-		<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-		to include your name with greetings you post.</p>
-		<%
-		    }
-		%>
-		
+	<body>
+	
 <%
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
@@ -63,7 +25,7 @@
         <%
     } else {
         %>
-        <p>Blog posts for '${fn:escapeXml(blogPostName)}'.</p>
+        <p>Blog posts</p>
         <%
         for (BlogPost blogPost : blogPosts) {
             pageContext.setAttribute("blogPost_title",
@@ -89,7 +51,15 @@
             }
         }
     }
-%>
+%>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</body>
 </html>
-
