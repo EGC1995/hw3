@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+	<welcome-file-list>
+    		<welcome-file>blog.jsp</welcome-file>
+    		<welcome-file>guestbook.jsp</welcome-file>
+  	</welcome-file-list>
+	
 	<servlet>
          	<servlet-name>guestbook</servlet-name>
          	<servlet-class>guestbook.GuestbookServlet</servlet-class>
@@ -48,10 +53,7 @@
     </servlet-mapping>
       
       
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>guestbook.jsp</welcome-file>
-  </welcome-file-list>
+
   
   
   
