@@ -3,6 +3,6 @@
 	<cron>
 		<url>/cron/mycronjob</url>
 		<description>Put your Cron Job description here</description>
-		<schedule>every 24 hours</schedule>
+		<schedule>every day 17:00</schedule>
 	</cron>
 </cronentries>
