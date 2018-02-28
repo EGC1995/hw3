@@ -7,6 +7,8 @@
 <%@ page import="com.googlecode.objectify.*" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="guestbook.BlogPost" %>
+<%@ page import="guestbook.Subscriber" %>
+
 
 <html>
 	<head>
@@ -36,11 +38,32 @@
 		    <input type="hidden" name="blogPostName" value="${fn:escapeXml(blogPostName)}"/>
 		</form>
 		
+		<% 
+		// Subscribe or Unsubscribe depending on subscription status
+		Subscriber currentSubscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
+		if (currentSubscriber != null) {
+		    %>
+		    <form action="subscribe" method="post">
+			    <input type="submit" value="Unsubscribe" />
+			    <input type="hidden" name="email" value="${fn:escapeXml(user.email)}"/>
+			    <input type="hidden" name="action" value="unsubscribe"/>
+			</form>
+		    <%
+		} else {
+			%>
+			<form action="subscribe" method="post">
+			    <input type="submit" value="Subscribe" />
+			    <input type="hidden" name="email" value="${fn:escapeXml(user.email)}"/>
+			    <input type="hidden" name="action" value="subscribe"/>
+			</form>
+			<%
+		}
+		%>
+		
 		<form action="showall.jsp" method="post">
 		    <input type="submit" value="Show all posts" />
 		    <input type="hidden" name="blogPostName" value="${fn:escapeXml(blogPostName)}"/>
 		</form>
-		
 		
 		<%
 			} else {
@@ -53,6 +76,8 @@
 		%>
 		
 <%
+  
+	// Blog posts
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(blogPosts);
@@ -70,12 +95,11 @@
         		if(counter == 3){
         			break;
         		}
-            pageContext.setAttribute("blogPost_title",
-            							blogPost.getTitle());
-            pageContext.setAttribute("blogPost_content",
-									blogPost.getContent());
-            pageContext.setAttribute("blogPost_date",
-									blogPost.getDate());
+        		
+            pageContext.setAttribute("blogPost_title", blogPost.getTitle());
+            pageContext.setAttribute("blogPost_content", blogPost.getContent());
+            pageContext.setAttribute("blogPost_date", blogPost.getDate());
+            
             if (blogPost.getUser() == null) {
 	            	%>
 	                <p>An anonymous person wrote something here, which shouldn't be possible.</p>
@@ -92,8 +116,29 @@
                 <%
             }
             counter = counter + 1;
-        }
-    }
+	}
+}
+    
+// DEBUG: list subscribers
+ObjectifyService.register(Subscriber.class);
+List<Subscriber> subscribers = ObjectifyService.ofy().load().type(Subscriber.class).list(); 
+	
+if (subscribers.isEmpty()) {
+	%>
+	<p>No subscribers.</p>
+	<%
+} else {
+	%>
+	<p>Subscribers:</p>
+	<%
+	for (Subscriber subscriber : subscribers) {
+		pageContext.setAttribute("subscriber_email", subscriber.getEmail());
+		%>
+		<p>${fn:escapeXml(subscriber_email)}</p>
+		<%
+	}
+}
+
 %>
 	</body>
 </html>

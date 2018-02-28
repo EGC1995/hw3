@@ -19,22 +19,28 @@
     </servlet-mapping>
   
   
-  <servlet>
-<servlet-name>GAECronServlet</servlet-name>
-<servlet-class>com.gaejexperiments.cron.GAEJCronServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-<servlet-name>GAECronServlet</servlet-name>
-<url-pattern>/cron/gaecronjob</url-pattern>
-</servlet-mapping>
+	<servlet>
+		<servlet-name>GAECronServlet</servlet-name>
+		<servlet-class>guestbook.GAECronServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GAECronServlet</servlet-name>
+		<url-pattern>/cron/gaecronjob</url-pattern>
+	</servlet-mapping>
   
-  
+	<servlet>
+		<servlet-name>Subscribe</servlet-name>
+		<servlet-class>guestbook.SubscriberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Subscribe</servlet-name>
+		<url-pattern>/subscribe</url-pattern>
+	</servlet-mapping>
   
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
 		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
 	</filter>
-
 	<filter-mapping>
 		<filter-name>ObjectifyFilter</filter-name>
 		<url-pattern>/*</url-pattern>
