@@ -7,13 +7,39 @@
 <%@ page import="com.googlecode.objectify.*" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="guestbook.BlogPost" %>	
+<%@ page import="guestbook.Subscriber" %>
+
+<%
+UserService userService = UserServiceFactory.getUserService();
+User user = userService.getCurrentUser();
+%>
 
 <html>
 	<head>
 		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 	</head>
-
 	<body>
+		<header class="title">
+			<h1>Arnold blog</h1>
+		</header>
+		<nav>
+			<a href="/">Home</a> 
+			<%
+if (user != null) {
+	Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
+	//Subscriber subscriber = null;
+			%> |
+			<a href="/blogcreate.jsp">Create Post</a> |
+			<a href="/subscribe?ret=showall.jsp"><%= (subscriber == null) ? "Subscribe" : "Unsubscribe" %></a> |
+			<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a>
+			<%
+} else {
+			%>
+			| <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a>
+			<%
+}
+			%>
+		</nav>
 	
 <%
 	ObjectifyService.register(BlogPost.class);

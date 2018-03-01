@@ -26,11 +26,11 @@ User user = userService.getCurrentUser();
 			<a href="/showall.jsp">All Posts</a> 
 			<%
 if (user != null) {
-	Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
-
+	//Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
+	Subscriber subscriber = null;
 			%> |
 			<a href="/blogcreate.jsp">Create Post</a> |
-			<a href="/subscribe"><%= (subscriber == null) ? "Subscribe" : "Unsubscribe" %></a> |
+			<a href="/subscribe?ret="><%= (subscriber == null) ? "Subscribe" : "Unsubscribe" %></a> |
 			<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a>
 			<%
 } else {
@@ -60,7 +60,7 @@ if (user != null) {
 // Blog posts
 ObjectifyService.register(BlogPost.class);
 List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
-Collections.sort(blogPosts);
+//Collections.sort(blogPosts);
 int counter = 0;
 
 if (blogPosts.isEmpty()) {
