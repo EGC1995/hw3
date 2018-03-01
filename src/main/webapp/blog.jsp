@@ -26,6 +26,7 @@ User user = userService.getCurrentUser();
 			<a href="/showall.jsp">All Posts</a> 
 			<%
 if (user != null) {
+	ObjectifyService.register(Subscriber.class);
 	Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
 			%> |
 			<a href="/blogcreate.jsp">Create Post</a> |
@@ -59,7 +60,7 @@ if (user != null) {
 // Blog posts
 ObjectifyService.register(BlogPost.class);
 List<BlogPost> blogPosts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
-//Collections.sort(blogPosts);
+Collections.sort(blogPosts);
 int counter = 0;
 
 if (blogPosts.isEmpty()) {

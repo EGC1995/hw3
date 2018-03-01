@@ -20,5 +20,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/guava-16.0.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/objectify-5.0.3.jar"/>
+	<classpathentry kind="lib" path="/Users/Koger/Desktop/Spring 2018/EE461L/eclipse-workspace/hw3/src/main/webapp/WEB-INF/lib/sendgrid-java-latest.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

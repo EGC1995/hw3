@@ -43,4 +43,14 @@
 		<filter-name>ObjectifyFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>GAEJEmailServlet</servlet-name>
+		<servlet-class>guestbook.GAEJEmailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GAEJEmailServlet</servlet-name>
+		<url-pattern>/gaejemail</url-pattern>
+	</servlet-mapping>
+
 </web-app>

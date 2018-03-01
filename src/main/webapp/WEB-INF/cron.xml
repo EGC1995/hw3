@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/cron/mycronjob</url>
-		<description>Put your Cron Job description here</description>
+		<url>/cron/gaecronjob</url>
+		<description>Send out update emails to subscribers</description>
 		<schedule>every day 17:00</schedule>
 	</cron>
 </cronentries>

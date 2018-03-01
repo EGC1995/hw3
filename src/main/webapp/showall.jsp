@@ -26,6 +26,7 @@ User user = userService.getCurrentUser();
 			<a href="/">Home</a> 
 			<%
 if (user != null) {
+	ObjectifyService.register(Subscriber.class);
 	Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
 	//Subscriber subscriber = null;
 			%> |

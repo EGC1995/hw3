@@ -8,6 +8,7 @@
 <%
 UserService userService = UserServiceFactory.getUserService();
 User user = userService.getCurrentUser();
+ObjectifyService.register(Subscriber.class);
 Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
 %>
 
