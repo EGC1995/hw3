@@ -20,20 +20,16 @@ public class SubscriberServlet extends HttpServlet {
 	    	UserService userService = UserServiceFactory.getUserService();
 	    	User user = userService.getCurrentUser();
     		Subscriber currentSubscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
-
-    		String status = "none";
     		
 		if (currentSubscriber == null) {
 			// Add subscriber
 	        Subscriber subscriber = new Subscriber(user.getEmail());
-	        ofy().save().entity(subscriber).now(); 
-	        status = "Added subscriber";
+	        ofy().save().entity(subscriber).now();
 		} else {
 			// Remove subscriber
 			ofy().delete().type(Subscriber.class).id(user.getEmail()).now();
-			status = "Deleted subscriber";
 		}
-
-    		resp.sendRedirect("/blog.jsp?status="+status);
+		
+    		resp.sendRedirect("/"+req.getParameter("ret"));
     }
 }
