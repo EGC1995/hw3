@@ -7,11 +7,9 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 public class BlogPost implements Comparable<BlogPost>{
-	@Parent Key<BlogPost> blogPostName;
     @Id Long id;
     @Index User user;
     @Index String title;
@@ -19,11 +17,10 @@ public class BlogPost implements Comparable<BlogPost>{
     @Index Date date;
     
     private BlogPost() {}
-    public BlogPost(User user, String title, String content, String blogPostName) {
+    public BlogPost(User user, String title, String content) {
         this.user = user;
         this.title = title;
         this.content = content;
-        this.blogPostName = Key.create(BlogPost.class, blogPostName);
         date = new Date();
     }
     public User getUser() {

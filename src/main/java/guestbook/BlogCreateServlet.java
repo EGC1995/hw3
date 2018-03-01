@@ -17,13 +17,12 @@ public class BlogCreateServlet extends HttpServlet {
                 throws IOException {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
- 
-        String blogPostName = req.getParameter("blogPostName");
+
         String title = req.getParameter("title");
         String content = req.getParameter("content");
-        BlogPost blogPost =  new BlogPost(user, title, content, blogPostName);
+        BlogPost blogPost =  new BlogPost(user, title, content);
         ofy().save().entity(blogPost).now(); 
  
-        resp.sendRedirect("/blog.jsp?blogPostName=" + blogPostName);
+        resp.sendRedirect("/blog.jsp");
     }
 }
