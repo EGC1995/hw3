@@ -5,6 +5,17 @@
    background-color: #FFFFCC;
 }
 
+.title {
+	text-align: center;
+	background-image: url("https://i2-prod.mirror.co.uk/incoming/article10353628.ece/ALTERNATES/s810/MAIN-Arnold-Schwarzenegger.jpg");
+	background-size: contain;
+	color: white;
+}
+
+nav {
+	text-align: center;
+}
+
 .blogPost {
 	border:2px; 
 	border-color:black; 
