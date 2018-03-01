@@ -26,8 +26,7 @@ User user = userService.getCurrentUser();
 			<a href="/showall.jsp">All Posts</a> 
 			<%
 if (user != null) {
-	//Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
-	Subscriber subscriber = null;
+	Subscriber subscriber = ObjectifyService.ofy().load().type(Subscriber.class).id(user.getEmail()).now();
 			%> |
 			<a href="/blogcreate.jsp">Create Post</a> |
 			<a href="/subscribe?ret="><%= (subscriber == null) ? "Subscribe" : "Unsubscribe" %></a> |
